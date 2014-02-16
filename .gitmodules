@@ -1,6 +1,6 @@
 [submodule "auto-complete"]
 	path = auto-complete
-	url = git://github.com/auto-complete/auto-complete.git
+	url = https://github.com/auto-complete/auto-complete.git
 [submodule "autopair"]
 	path = autopair
 	url = https://github.com/capitaomorte/autopair.git
@@ -27,10 +27,10 @@
 	url = https://github.com/milkypostman/powerline.git
 [submodule "sbt-mode"]
 	path = sbt-mode
-	url = git://github.com/hvesalai/sbt-mode.git
+	url = https://github.com/hvesalai/sbt-mode.git
 [submodule "scala-mode2"]
 	path = scala-mode2
-	url = git://github.com/hvesalai/scala-mode2.git
+	url = https://github.com/hvesalai/scala-mode2.git
 [submodule "shell-pop"]
 	path = shell-pop
 	url = https://github.com/kyagi/shell-pop-el.git
