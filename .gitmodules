@@ -1,0 +1,39 @@
+[submodule "auto-complete"]
+	path = auto-complete
+	url = git://github.com/auto-complete/auto-complete.git
+[submodule "autopair"]
+	path = autopair
+	url = https://github.com/capitaomorte/autopair.git
+[submodule "ctable"]
+	path = ctable
+	url = https://github.com/kiwanami/emacs-ctable.git
+[submodule "deferred"]
+	path = deferred
+	url = https://github.com/kiwanami/emacs-deferred.git
+[submodule "epc"]
+	path = epc
+	url = https://github.com/kiwanami/emacs-epc.git
+[submodule "jedi"]
+	path = jedi
+	url = https://github.com/tkf/emacs-jedi.git
+[submodule "nyan-mode"]
+	path = nyan-mode
+	url = https://github.com/TeMPOraL/nyan-mode.git
+[submodule "popup"]
+	path = popup
+	url = https://github.com/auto-complete/popup-el.git
+[submodule "powerline"]
+	path = powerline
+	url = https://github.com/milkypostman/powerline.git
+[submodule "sbt-mode"]
+	path = sbt-mode
+	url = git://github.com/hvesalai/sbt-mode.git
+[submodule "scala-mode2"]
+	path = scala-mode2
+	url = git://github.com/hvesalai/scala-mode2.git
+[submodule "shell-pop"]
+	path = shell-pop
+	url = https://github.com/kyagi/shell-pop-el.git
+[submodule "tabbar"]
+	path = tabbar
+	url = https://github.com/dholm/tabbar.git

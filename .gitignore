@@ -1,0 +1,13 @@
+/tramp
+/pwd
+/proxy
+*.elc
+/auto-save-list
+CVS
+.svn
+*~
+.cvsignore
+.*.lock
+/ac-comphist.dat
+\#*
+
