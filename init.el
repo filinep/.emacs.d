@@ -110,6 +110,19 @@
 (ido-mode 'buffers) ;; only use this line to turn off ido for file names!
 (setq ido-ignore-buffers '("^ " "*Completions*" "*Shell Command Output*" "*Messages*" "Async Shell Command"))
 
+(add-to-list 'load-path "~/.emacs.d/helm/")
+(require 'helm)
+(require 'helm-files)
+(setq helm-for-files-preferred-list
+  '(helm-source-buffers-list
+    helm-source-recentf
+    helm-source-bookmarks
+    helm-source-file-cache
+    helm-source-files-in-current-dir
+    helm-source-locate)
+)
+(global-set-key (kbd "C-x C-f") 'helm-for-files)
+
 ;; Dired sorting order
 (setenv "LC_COLLATE" "C")
 
