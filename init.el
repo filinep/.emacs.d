@@ -1,8 +1,18 @@
-(defun get-string-from-file (filePath)
-  "Return filePath's file content."
-  (with-temp-buffer
-    (insert-file-contents filePath)
-    (buffer-string)))
+;; Load paths and files
+(add-to-list 'load-path "~/.emacs.d/")
+
+(mapc (lambda (x) (add-to-list 'load-path (concat "~/.emacs.d/" x "/"))) 
+      '("popup" "deferred" "ctable" "epc" "jedi" 
+	"autopair" "auto-complete" 
+	"scala-mode2" "sbt-mode" 
+	"projectile" "s" "dash" "pkg-info" "epl" 
+	"helm" 
+	"shell-pop"))
+
+(mapc 'load
+      '("custom_functions" 
+	"powerline_tweak" 
+	"tabbar_tweak"))
 
 ;; Proxy
 (setq url-http-proxy-basic-auth-storage
@@ -19,117 +29,98 @@
 			   ("melpa" . "http://melpa.milkbox.net/packages/")))
   )
 
-(add-to-list 'load-path "~/.emacs.d/")
-(add-to-list 'load-path "~/.emacs.d/popup/")
-(add-to-list 'load-path "~/.emacs.d/deferred/")
-(add-to-list 'load-path "~/.emacs.d/ctable/")
-(add-to-list 'load-path "~/.emacs.d/epc/")
-(add-to-list 'load-path "~/.emacs.d/jedi/")
-
+;; Python stuff
 (require 'ctable)
 (require 'epc)
 (autoload 'jedi:setup "jedi" nil t)
+(add-hook 'python-mode-hook 'jedi:setup)
+(setq jedi:complete-on-dot t)
+;(add-hook 'after-init-hook #'global-flycheck-mode)
 
-;; el-get
-;(add-to-list 'load-path "~/.emacs.d/el-get/el-get")
-;(unless (require 'el-get nil 'noerror)
-;  (with-current-buffer
-;      (url-retrieve-synchronously
-;       "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
-;    (let (el-get-master-branch)
-;      (goto-char (point-max))
-;      (eval-print-last-sexp))))
-;(el-get 'sync)
-
-;; Smart home key
-(defun smart-beginning-of-line ()
-  (interactive)
-  (let ((oldpos (point)))
-    (back-to-indentation)
-    (and (= oldpos (point))
-         (beginning-of-line))))
-(global-set-key [home] 'smart-beginning-of-line)
-
-;; GUI
+;; Stuff
 (load-theme 'tango-dark) ; Sets colour theme
 (tool-bar-mode -1) ; No toolbar
 (delete-selection-mode 1) ; Delete selected text when typing
 (setq-default cursor-type 'bar) ; Use bar for cursor
-(load "powerline_tweak.el") ; Sets modeline
-(load "tabbar_tweak.el") ; Setup tabbar
 (show-paren-mode 1) ; Matches parentheses
-
-(add-to-list 'load-path "~/.emacs.d/autopair")
-(require 'autopair)
-(autopair-global-mode) ; to enable in all buffers
 
 (global-linum-mode t) ; Sets line numbers
 (setq linum-format "%3d\u2502") ; Adds line next to line numbers
 
 (global-hl-line-mode 1) ; Highlights current line
-(set-face-background 'hl-line "#3e4446")
-(set-face-foreground 'highlight nil)
+(set-face-background 'hl-line "#3e4446") ; Set colour of highlighted line
+(set-face-foreground 'highlight nil) ; Keep syntax highlighting on current line
 
-(setq scroll-error-top-bottom t)
-(setq next-screen-context-line 3)
+(setq scroll-error-top-bottom t) ; Allows pgup/pgdn to go to extremes
+(setq next-screen-context-line 3) ; 3 line overlap on page scroll
 
-;; SSH stuff
+(setq c-default-style "linux" c-basic-offset 4) ; Supposed to fix indentation
+
+(global-set-key [home] 'smart-home) ; Smart home key
+(global-set-key (kbd "S-<home>") 'smart-home-with-mark) ; Smart home key with selection
+
+(global-set-key [f5] (lambda () (interactive)(kill-buffer))) ; kill current buffer with f5
+
+(desktop-save-mode 1) ; save sessions
+
+(setq dired-listing-switches "-aghopBG --group-directories-first") ; dired formatting
+(put 'dired-find-alternate-file 'disabled nil) ; use same buffer on 'a'
+
+(require 'autopair)
+(autopair-global-mode) ; to enable in all buffers
+
+(require 'shell-pop)
+(global-set-key [f8] 'shell-pop) ; popup shell
+
 (require 'tramp)
-(setq tramp-default-method "ssh")
+(setq tramp-default-method "ssh") ; use ssh for remote files
 
 ;; Auto-completion
-(add-to-list 'load-path "~/.emacs.d/auto-complete/")
 (require 'auto-complete)
 (require 'auto-complete-config)
 (add-to-list 'ac-dictionary-directories "~/.emacs.d/auto-complete/dict")
 (ac-config-default)
 (setq ac-delay 0.05)
-(setq ac-quick-help-delay 0.5)
+(setq ac-quick-help-delay 0.25)
 (global-auto-complete-mode t)
 
 ;; Ensime + Scala + SBT
-(add-to-list 'load-path "~/.emacs.d/scala-mode2/")
 (add-to-list 'load-path "/usr/share/ensime/elisp")
 (add-to-list 'exec-path "/usr/share/ensime")
-(add-to-list 'load-path "~/.emacs.d/sbt-mode/")
 
 (require 'scala-mode2)
 (require 'sbt-mode)
 (require 'ensime)
 
 (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
-
-;; Python stuff
-(add-hook 'python-mode-hook 'jedi:setup)
-(setq jedi:complete-on-dot t)
-;(add-hook 'after-init-hook #'global-flycheck-mode)
+(add-to-list 'auto-mode-alist '("\\.java\\'" . scala-mode))
+(modify-coding-system-alist 'file "\\.java$" 'utf-8)
 
 ;; IDO settings
 (require 'ido)
-(ido-mode 1)
-(ido-mode 'buffers) ;; only use this line to turn off ido for file names!
+(ido-mode 0) ;; only use this line to turn off ido for file names!
 (setq ido-ignore-buffers '("^ " "*Completions*" "*Shell Command Output*" "*Messages*" "Async Shell Command"))
+(ido-everywhere 1)
+(setq ido-use-faces nil)
 
-(add-to-list 'load-path "~/.emacs.d/helm/")
-(require 'helm)
-(require 'helm-files)
-(setq helm-for-files-preferred-list
-  '(helm-source-buffers-list
-    helm-source-recentf
-    helm-source-bookmarks
-    helm-source-file-cache
-    helm-source-files-in-current-dir
-    helm-source-locate)
-)
-(global-set-key (kbd "C-x C-f") 'helm-for-files)
+;(require 'projectile)
+;(projectile-global-mode)
+;(setq projectile-enable-caching t)
 
-;; Dired sorting order
-(setenv "LC_COLLATE" "C")
-
-;; Popup terminal
-(add-to-list 'load-path "~/.emacs.d/shell-pop")
-(require 'shell-pop)
-(global-set-key [f8] 'shell-pop)
+;; Helm
+;; (require 'helm)
+;; (require 'helm-files)
+;; (require 'helm-projectile)
+;; (setq helm-for-files-preferred-list
+;;   '(helm-source-buffers-list
+;;     helm-source-recentf
+;;     ;helm-source-bookmarks
+;;     helm-source-file-cache
+;;     helm-source-files-in-current-dir
+;;     helm-source-locate)
+;;    ; helm-source-projectile-files-list)
+;; )
+;; (global-set-key (kbd "C-x C-f") 'helm-for-files)
 
 ;; Custom stuff I didnt change
 (custom-set-variables
@@ -143,4 +134,3 @@
  '(shell-pop-window-height 60)
  '(shell-pop-window-position "bottom")
 )
-(put 'dired-find-alternate-file 'disabled nil)

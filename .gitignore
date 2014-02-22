@@ -10,4 +10,5 @@ CVS
 .*.lock
 /ac-comphist.dat
 \#*
+.emacs.desktop
 
