@@ -37,3 +37,9 @@
 [submodule "tabbar"]
 	path = tabbar
 	url = https://github.com/dholm/tabbar.git
+[submodule "sr-speedbar"]
+	path = sr-speedbar
+	url = https://github.com/emacsmirror/sr-speedbar.git
+[submodule "grizzl"]
+	path = grizzl
+	url = https://github.com/d11wtq/grizzl.git

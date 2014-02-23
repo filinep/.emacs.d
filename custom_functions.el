@@ -27,6 +27,22 @@ of the line and the first indented character"
     (call-interactively 'set-mark-command))
   (smart-home))
 
+(defun dired-mouse-find-alternate-file (event)
+  "In dired, visit the file or directory you click on instead of the dired buffer."
+  (interactive "e")
+  (let (file)
+    (save-excursion
+      (set-buffer (window-buffer (posn-window (event-end event))))
+      (save-excursion
+	(goto-char (posn-point (event-end event)))
+	(setq file (dired-get-filename nil t))))
+    (select-window (posn-window (event-end event)))
+    (find-alternate-file (file-name-sans-versions file t))))
+
+;(define-key dired-mode-map [mouse-2] 'dired-mouse-find-alternate-file)
+
+(defun no-linum () (linum-mode 0))
+
 (add-hook 'dired-mode-hook
 	  (lambda ()
 	    (define-key dired-mode-map (kbd "^")
