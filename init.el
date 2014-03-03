@@ -9,12 +9,24 @@
 	;"weechat" "s"
 	;"projectile" "s" "dash" "pkg-info" "epl" 
 	;"helm" 
-	"shell-pop"))
+	"shell-pop"
+	"emacs-eclim"))
 
 (mapc 'load
       '("custom_functions" 
 	"powerline_tweak" 
 	"tabbar_tweak"))
+
+(require 'eclim)
+(global-eclim-mode)
+(require 'eclimd)
+(setq eclim-auto-save t
+      eclim-executable "/home/filipe/local/eclipse/plugins/org.eclim_2.3.2/bin/eclim"
+      eclimd-executable "/home/filipe/local/eclipse/plugins/org.eclim_2.3.2/bin/eclimd"
+      help-at-pt-display-when-idle t
+      help-at-pt-timer-delay 0.1
+      eclimd-default-workspace "~/src")
+(help-at-pt-set-timer)
 
 ;; Proxy
 (setq url-http-proxy-basic-auth-storage
@@ -95,26 +107,33 @@
 (require 'auto-complete-config)
 (add-to-list 'ac-dictionary-directories "~/.emacs.d/auto-complete/dict")
 (ac-config-default)
-(setq ac-delay 0.05)
-(setq ac-quick-help-delay 0.25)
+(setq ac-delay 0)
+(setq ac-quick-help-delay 0.1)
 (global-auto-complete-mode t)
+(require 'ac-emacs-eclim-source)
+(ac-emacs-eclim-config)
 
 ;; Ensime + Scala + SBT
-(add-to-list 'load-path "/usr/share/ensime/elisp")
-(add-to-list 'exec-path "/usr/share/ensime")
+;; (add-to-list 'load-path "/usr/share/ensime/elisp")
+;; (add-to-list 'exec-path "/usr/share/ensime")
 
 (require 'scala-mode2)
 (require 'sbt-mode)
-(require 'ensime)
+;; (require 'ensime)
 
-(add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
-(add-to-list 'auto-mode-alist '("\\.java\\'" . scala-mode))
+;; (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
+;; (add-to-list 'auto-mode-alist '("\\.java\\'" . scala-mode))
 (modify-coding-system-alist 'file "\\.java$" 'utf-8)
 
 ;; Python stuff
-(require 'ctable)
-(require 'epc)
-(autoload 'jedi:setup "jedi" nil t)
-(add-hook 'python-mode-hook 'jedi:setup)
-(setq jedi:complete-on-dot t)
+;; (require 'ctable)
+;; (require 'epc)
+;; (autoload 'jedi:setup "jedi" nil t)
+;; (add-hook 'python-mode-hook 'jedi:setup)
+;; (setq jedi:complete-on-dot t)
 ;(add-hook 'after-init-hook #'global-flycheck-mode)
+(add-hook 'python-mode-hook
+	  (lambda ()
+	    (setq indent-tabs-mode t)
+	    (setq tab-width 4)
+	    (setq python-indent 4)))

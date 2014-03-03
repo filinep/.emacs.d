@@ -43,3 +43,6 @@
 [submodule "grizzl"]
 	path = grizzl
 	url = https://github.com/d11wtq/grizzl.git
+[submodule "emacs-eclim"]
+	path = emacs-eclim
+	url = https://github.com/senny/emacs-eclim.git
