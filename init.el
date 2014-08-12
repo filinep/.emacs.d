@@ -5,9 +5,9 @@
       '("popup" "deferred" "ctable" "epc" "jedi" 
         "autopair" "auto-complete" 
         "scala-mode2" "sbt-mode" 
-        "sr-speedbar"
         "emacs-eclim"
-        "git-gutter"))
+        "git-gutter"
+        "neotree"))
 
 (mapc 'load
       '("custom_functions" 
@@ -59,12 +59,8 @@
 
 (setq inhibit-startup-screen t)
 
-(require 'sr-speedbar)
-(setq sr-speedbar-auto-refresh t)
-(setq sr-speedbar-delete-windows t)
-(setq sr-speedbar-width 50)
-(setq sr-speedbar-right-side nil)
-(global-set-key [f7] 'sr-speedbar-toggle)
+(require 'neotree)
+(global-set-key [f8] 'neotree-toggle)
 
 (load-theme 'tango-dark) ; Sets colour theme
 (tool-bar-mode -1) ; No toolbar
