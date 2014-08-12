@@ -3,19 +3,17 @@
 
 (mapc (lambda (x) (add-to-list 'load-path (concat "~/.emacs.d/" x "/"))) 
       '("popup" "deferred" "ctable" "epc" "jedi" 
-	"autopair" "auto-complete" 
-	"scala-mode2" "sbt-mode" 
-	"sr-speedbar"
-	;"weechat" "s"
-	;"projectile" "s" "dash" "pkg-info" "epl" 
-	;"helm" 
-	"shell-pop"
-	"emacs-eclim"))
+        "autopair" "auto-complete" 
+        "scala-mode2" "sbt-mode" 
+        "sr-speedbar"
+        "emacs-eclim"
+        "git-gutter"))
 
 (mapc 'load
       '("custom_functions" 
-	"powerline_tweak" 
-	"tabbar_tweak"))
+        "powerline_tweak" 
+        "tabbar_tweak"
+        ))
 
 (require 'eclim)
 (global-eclim-mode)
@@ -39,11 +37,26 @@
   (require 'package)
   (package-initialize)
   (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-			   ("marmalade" . "http://marmalade-repo.org/packages/")
-			   ("melpa" . "http://melpa.milkbox.net/packages/")))
+                           ("marmalade" . "http://marmalade-repo.org/packages/")
+                           ("melpa" . "http://melpa.milkbox.net/packages/")))
   )
 
 ;; Stuff
+(setq x-select-enable-clipboard t)
+(unless window-system
+ (when (getenv "DISPLAY")
+  (defun xsel-cut-function (text &optional push)
+    (with-temp-buffer
+      (insert text)
+      (call-process-region (point-min) (point-max) "xsel" nil 0 nil "--clipboard" "--input")))
+  (defun xsel-paste-function()
+    (let ((xsel-output (shell-command-to-string "xsel --clipboard --output")))
+      (unless (string= (car kill-ring) xsel-output)
+        xsel-output )))
+  (setq interprogram-cut-function 'xsel-cut-function)
+  (setq interprogram-paste-function 'xsel-paste-function)
+ ))
+
 (setq inhibit-startup-screen t)
 
 (require 'sr-speedbar)
@@ -55,12 +68,11 @@
 
 (load-theme 'tango-dark) ; Sets colour theme
 (tool-bar-mode -1) ; No toolbar
+(scroll-bar-mode -1) ; No scrollbar
+(menu-bar-mode -99) ; No menubar
 (delete-selection-mode 1) ; Delete selected text when typing
 (setq-default cursor-type 'bar) ; Use bar for cursor
 (show-paren-mode 1) ; Matches parentheses
-
-(global-linum-mode t) ; Sets line numbers
-(setq linum-format "%3d\u2502") ; Adds line next to line numbers
 
 (global-hl-line-mode 1) ; Highlights current line
 (set-face-background 'hl-line "#3e4446") ; Set colour of highlighted line
@@ -82,17 +94,11 @@
 (put 'dired-find-alternate-file 'disabled nil) ; use same buffer on 'a'
 (add-hook 'dired-mode-hook 'no-linum)
 
-(require 'autopair) ; pairs ", {, (, etc
-(autopair-global-mode)
+(require 'git-gutter)
+(global-git-gutter-mode t)
 
-(require 'shell-pop) ; popup shell
-(shell-pop--set-shell-type 'shell-pop-shell-type '("ansi-term" "*Terminal*" (lambda nil (ansi-term shell-pop-term-shell))))
-;(setq shell-pop-shell-type (quote ("Custom" "*Terminal*" (lambda nil (ansi-term shell-pop-term-shell)))))
-(setq shell-pop-window-height 60)
-(setq shell-pop-window-position "bottom")
-(add-hook 'term-mode-hook 'no-linum)
-(add-hook 'shell-mode-hook 'no-linum)
-(global-set-key [f8] 'shell-pop)
+(require 'autopair) ; pairs ", {, (, etc
+(autopair-global-mode t)
 
 (require 'tramp)
 (setq tramp-default-method "ssh") ; use ssh for remote files
@@ -113,15 +119,30 @@
 (require 'ac-emacs-eclim-source)
 (ac-emacs-eclim-config)
 
+; whitespace stuff
+(global-whitespace-mode t)
+(setq whitespace-style '(spaces tabs newline space-mark tab-mark newline-mark face))
+(setq whitespace-display-mappings
+ '(
+   (space-mark 32 [183] [46]) ; normal space
+   (space-mark 160 [164] [95])
+   (space-mark 2208 [2212] [95])
+   (space-mark 2336 [2340] [95])
+   (space-mark 3616 [3620] [95])
+   (space-mark 3872 [3876] [95])
+   (newline-mark 10 [10]) ; newlne
+   (tab-mark 9 [8594 9] [92 9]) ; tab
+))
+
 ;; Ensime + Scala + SBT
-;; (add-to-list 'load-path "/usr/share/ensime/elisp")
-;; (add-to-list 'exec-path "/usr/share/ensime")
+(add-to-list 'load-path "/usr/share/ensime/elisp")
+(add-to-list 'exec-path "/usr/share/ensime")
 
 (require 'scala-mode2)
 (require 'sbt-mode)
-;; (require 'ensime)
+(require 'ensime)
 
-;; (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
+(add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
 ;; (add-to-list 'auto-mode-alist '("\\.java\\'" . scala-mode))
 (modify-coding-system-alist 'file "\\.java$" 'utf-8)
 
@@ -133,7 +154,21 @@
 ;; (setq jedi:complete-on-dot t)
 ;(add-hook 'after-init-hook #'global-flycheck-mode)
 (add-hook 'python-mode-hook
-	  (lambda ()
-	    (setq indent-tabs-mode t)
-	    (setq tab-width 4)
-	    (setq python-indent 4)))
+          (lambda ()
+            (setq-default indent-tabs-mode nil)
+            (setq tab-width 4)
+            (setq python-indent 4)))
+
+(add-hook 'after-change-major-mode-hook 
+          '(lambda () 
+             (setq-default indent-tabs-mode nil)
+             (setq c-basic-indent 4)
+             (setq tab-width 4)))
+
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(whitespace-space ((t (:foreground "darkgray")))))
+

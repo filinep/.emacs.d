@@ -9,6 +9,8 @@
 
 (global-set-key [C-prior] 'tabbar-backward-tab)
 (global-set-key [C-next] 'tabbar-forward-tab)
+(global-set-key [header-line mouse-4] 'tabbar-mwheel-backward)
+(global-set-key [header-line down-mouse-5] 'tabbar-forward-tab)
 (global-set-key [C-M-prior] 'tabbar-backward-group)
 (global-set-key [C-M-next] 'tabbar-forward-group)
 
@@ -70,8 +72,8 @@ That is, a string used to represent it on the tab bar."
  (defun my-tabbar-buffer-groups ()
    (list (cond ((string-equal "*" (substring (buffer-name) 0 1)) "emacs")
                ((eq major-mode 'dired-mode) "emacs")
-	       (t (symbol-name major-mode))
-	       )))
+               (t (symbol-name major-mode))
+               )))
  (setq tabbar-buffer-groups-function 'my-tabbar-buffer-groups)
 
 (tabbar-mode 1)
