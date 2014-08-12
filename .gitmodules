@@ -31,9 +31,6 @@
 [submodule "scala-mode2"]
 	path = scala-mode2
 	url = https://github.com/hvesalai/scala-mode2.git
-[submodule "shell-pop"]
-	path = shell-pop
-	url = https://github.com/kyagi/shell-pop-el.git
 [submodule "tabbar"]
 	path = tabbar
 	url = https://github.com/dholm/tabbar.git
