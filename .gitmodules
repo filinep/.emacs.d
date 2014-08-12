@@ -49,3 +49,6 @@
 [submodule "neotree"]
 	path = neotree
 	url = https://github.com/jaypei/emacs-neotree.git
+[submodule "s"]
+	path = s
+	url = https://github.com/magnars/s.el

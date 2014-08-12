@@ -5,7 +5,7 @@
       '("popup" "deferred" "ctable" "epc" "jedi" 
         "autopair" "auto-complete" 
         "scala-mode2" "sbt-mode" 
-        "emacs-eclim"
+        "emacs-eclim" "s"
         "git-gutter"
         "neotree"))
 
