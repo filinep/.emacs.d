@@ -1,5 +1,5 @@
 ;; Load paths and files
-(add-to-list 'load-path "~/.emacs.d/")
+(add-to-list 'load-path "~/.emacs.d/lisp")
 
 (mapc (lambda (x) (add-to-list 'load-path (concat "~/.emacs.d/" x "/"))) 
       '("popup" "deferred" "ctable" "epc" "jedi" 
