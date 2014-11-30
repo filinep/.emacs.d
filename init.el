@@ -7,7 +7,10 @@
         "scala-mode2" "sbt-mode" 
         "emacs-eclim" "s"
         "git-gutter"
-        "neotree"))
+        "neotree"
+        "epl" "pkg-info.el" "f.el" "dash.el" "projectile"))
+
+(require 'f)
 
 (mapc 'load
       '("custom_functions" 
@@ -89,6 +92,12 @@
 (setq dired-listing-switches "-aghoBG --time-style=+ --group-directories-first") ; dired formatting
 (put 'dired-find-alternate-file 'disabled nil) ; use same buffer on 'a'
 (add-hook 'dired-mode-hook 'no-linum)
+
+(require 'projectile)
+(projectile-global-mode)
+(setq projectile-indexing-method 'native)
+(setq projectile-file-exists-remote-cache-expire (* 60 5))
+(setq projectile-file-exists-local-cache-expire 60)
 
 (require 'git-gutter)
 (global-git-gutter-mode t)

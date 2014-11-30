@@ -52,3 +52,15 @@
 [submodule "projectile"]
 	path = projectile
 	url = https://github.com/bbatsov/projectile.git
+[submodule "dash.el"]
+	path = dash.el
+	url = https://github.com/magnars/dash.el.git
+[submodule "f.el"]
+	path = f.el
+	url = https://github.com/rejeep/f.el
+[submodule "pkg-info.el"]
+	path = pkg-info.el
+	url = https://github.com/lunaryorn/pkg-info.el.git
+[submodule "epl"]
+	path = epl
+	url = https://github.com/cask/epl.git
