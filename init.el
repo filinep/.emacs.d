@@ -8,7 +8,10 @@
         "emacs-eclim" "s"
         "git-gutter"
         "neotree"
-        "epl" "pkg-info.el" "f.el" "dash.el" "projectile"))
+        "epl" "pkg-info.el" "f.el" "dash.el" "projectile"
+        "ensime-emacs"
+        "yasnippet"
+        "company-mode"))
 
 (require 'f)
 
@@ -137,11 +140,15 @@
    (space-mark 3872 [3876] [95])
    (newline-mark 10 [10]) ; newlne
    (tab-mark 9 [8594 9] [92 9]) ; tab
-))
+   ))
+
+; yasnippet stuff
+(require 'yasnippet)
+(yas-global-mode 1)
 
 ;; Ensime + Scala + SBT
-(add-to-list 'load-path "/usr/share/ensime/elisp")
-(add-to-list 'exec-path "/usr/share/ensime")
+;(add-to-list 'load-path "/usr/share/ensime/elisp")
+;(add-to-list 'exec-path "/usr/share/ensime")
 
 (require 'scala-mode2)
 (require 'sbt-mode)

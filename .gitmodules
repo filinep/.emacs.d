@@ -64,3 +64,12 @@
 [submodule "epl"]
 	path = epl
 	url = https://github.com/cask/epl.git
+[submodule "yasnippet"]
+	path = yasnippet
+	url = https://github.com/capitaomorte/yasnippet.git
+[submodule "ensime-emacs"]
+	path = ensime-emacs
+	url = https://github.com/ensime/ensime-emacs.git
+[submodule "company-mode"]
+	path = company-mode
+	url = https://github.com/company-mode/company-mode.git
