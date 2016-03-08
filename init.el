@@ -21,16 +21,16 @@
         "tabbar_tweak"
         ))
 
-(require 'eclim)
-(global-eclim-mode)
-(require 'eclimd)
-(setq eclim-auto-save t
-      eclim-executable "/home/filipe/local/eclipse/plugins/org.eclim_2.3.2/bin/eclim"
-      eclimd-executable "/home/filipe/local/eclipse/plugins/org.eclim_2.3.2/bin/eclimd"
-      help-at-pt-display-when-idle t
-      help-at-pt-timer-delay 0.1
-      eclimd-default-workspace "~/src")
-(help-at-pt-set-timer)
+;; (require 'eclim)
+;; (global-eclim-mode)
+;; (require 'eclimd)
+;; (setq eclim-auto-save t
+;;       eclim-executable "/home/filipe/local/eclipse/plugins/org.eclim_2.3.2/bin/eclim"
+;;       eclimd-executable "/home/filipe/local/eclipse/plugins/org.eclim_2.3.2/bin/eclimd"
+;;       help-at-pt-display-when-idle t
+;;       help-at-pt-timer-delay 0.1
+;;       eclimd-default-workspace "~/src")
+;; (help-at-pt-set-timer)
 
 ;; Proxy
 (setq url-http-proxy-basic-auth-storage
@@ -124,8 +124,8 @@
 (setq ac-delay 0)
 (setq ac-quick-help-delay 0.1)
 (global-auto-complete-mode t)
-(require 'ac-emacs-eclim-source)
-(ac-emacs-eclim-config)
+;; (require 'ac-emacs-eclim-source)
+;; (ac-emacs-eclim-config)
 
 ; whitespace stuff
 (global-whitespace-mode t)
