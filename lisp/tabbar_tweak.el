@@ -9,10 +9,12 @@
 
 (global-set-key [C-prior] 'tabbar-backward-tab)
 (global-set-key [C-next] 'tabbar-forward-tab)
+(global-set-key [C-tab] 'tabbar-forward-tab)
 (global-set-key [header-line mouse-4] 'tabbar-mwheel-backward)
 (global-set-key [header-line down-mouse-5] 'tabbar-forward-tab)
 (global-set-key [C-M-prior] 'tabbar-backward-group)
 (global-set-key [C-M-next] 'tabbar-forward-group)
+(global-set-key [C-M-tab] 'tabbar-forward-group)
 
 (setq tabbar-scroll-right-button nil)
 (setq tabbar-scroll-left-button nil)

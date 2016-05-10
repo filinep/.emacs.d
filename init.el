@@ -86,7 +86,9 @@
 (setq c-default-style "linux" c-basic-offset 4) ; Supposed to fix indentation
 
 (global-set-key [home] 'smart-home) ; Smart home key
+(global-set-key (kbd "C-a") 'smart-home)
 (global-set-key (kbd "S-<home>") 'smart-home-with-mark) ; Smart home key with selection
+(global-set-key (kbd "S-C-a") 'smart-home-with-mark)
 
 (global-set-key [f5] (lambda () (interactive)(kill-buffer))) ; kill current buffer with f5
 
