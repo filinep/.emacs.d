@@ -11,7 +11,8 @@
         "epl" "pkg-info.el" "f.el" "dash.el" "projectile"
         "ensime-emacs"
         "yasnippet"
-        "company-mode"))
+        "company-mode"
+        "jade-mode" "coffee-mode"))
 
 (require 'f)
 
@@ -97,6 +98,12 @@
 (setq dired-listing-switches "-aghoBG --time-style=+ --group-directories-first") ; dired formatting
 (put 'dired-find-alternate-file 'disabled nil) ; use same buffer on 'a'
 (add-hook 'dired-mode-hook 'no-linum)
+
+(require 'coffee-mode)
+
+(require 'sws-mode)
+(require 'jade-mode)
+(add-to-list 'auto-mode-alist '("\\.styl\\'" . sws-mode))
 
 (require 'projectile)
 (projectile-global-mode)
