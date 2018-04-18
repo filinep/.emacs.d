@@ -13,9 +13,6 @@
 [submodule "epc"]
 	path = epc
 	url = https://github.com/kiwanami/emacs-epc.git
-[submodule "jedi"]
-	path = jedi
-	url = https://github.com/tkf/emacs-jedi.git
 [submodule "nyan-mode"]
 	path = nyan-mode
 	url = https://github.com/TeMPOraL/nyan-mode.git
@@ -34,24 +31,12 @@
 [submodule "tabbar"]
 	path = tabbar
 	url = https://github.com/dholm/tabbar.git
-[submodule "grizzl"]
-	path = grizzl
-	url = https://github.com/d11wtq/grizzl.git
-[submodule "emacs-eclim"]
-	path = emacs-eclim
-	url = https://github.com/senny/emacs-eclim.git
 [submodule "git-gutter"]
 	path = git-gutter
 	url = https://github.com/syohex/emacs-git-gutter.git
-[submodule "neotree"]
-	path = neotree
-	url = https://github.com/jaypei/emacs-neotree.git
 [submodule "s"]
 	path = s
 	url = https://github.com/magnars/s.el
-[submodule "projectile"]
-	path = projectile
-	url = https://github.com/bbatsov/projectile.git
 [submodule "dash.el"]
 	path = dash.el
 	url = https://github.com/magnars/dash.el.git
@@ -64,12 +49,6 @@
 [submodule "epl"]
 	path = epl
 	url = https://github.com/cask/epl.git
-[submodule "yasnippet"]
-	path = yasnippet
-	url = https://github.com/capitaomorte/yasnippet.git
-[submodule "ensime-emacs"]
-	path = ensime-emacs
-	url = https://github.com/ensime/ensime-emacs.git
 [submodule "company-mode"]
 	path = company-mode
 	url = https://github.com/company-mode/company-mode.git

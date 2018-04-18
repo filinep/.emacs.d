@@ -5,12 +5,9 @@
       '("popup" "deferred" "ctable" "epc" "jedi" 
         "autopair" "auto-complete" 
         "scala-mode2" "sbt-mode" 
-        "emacs-eclim" "s"
+        "s"
         "git-gutter"
-        "neotree"
-        "epl" "pkg-info.el" "f.el" "dash.el" "projectile"
-        "ensime-emacs"
-        "yasnippet"
+        "epl" "pkg-info.el" "f.el" "dash.el"
         "company-mode"
         "jade-mode" "coffee-mode"))
 
@@ -22,31 +19,11 @@
         "tabbar_tweak"
         ))
 
-;; (require 'eclim)
-;; (global-eclim-mode)
-;; (require 'eclimd)
-;; (setq eclim-auto-save t
-;;       eclim-executable "/home/filipe/local/eclipse/plugins/org.eclim_2.3.2/bin/eclim"
-;;       eclimd-executable "/home/filipe/local/eclipse/plugins/org.eclim_2.3.2/bin/eclimd"
-;;       help-at-pt-display-when-idle t
-;;       help-at-pt-timer-delay 0.1
-;;       eclimd-default-workspace "~/src")
-;; (help-at-pt-set-timer)
-
 ;; Proxy
 (setq url-http-proxy-basic-auth-storage
     (list (list (get-string-from-file "~/.emacs.d/proxy")
                 (cons "Input your LDAP UID !"
                       (base64-encode-string (get-string-from-file "~/.emacs.d/pwd"))))))
-
-;; Packages
-(when (>= emacs-major-version 24)
-  (require 'package)
-  (package-initialize)
-  (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-                           ("marmalade" . "http://marmalade-repo.org/packages/")
-                           ("melpa" . "http://melpa.milkbox.net/packages/")))
-  )
 
 ;; Stuff
 (setq x-select-enable-clipboard t)
@@ -66,9 +43,6 @@
 
 (setq inhibit-startup-screen t)
 
-(require 'neotree)
-(global-set-key [f8] 'neotree-toggle)
-
 (load-theme 'tango-dark) ; Sets colour theme
 (tool-bar-mode -1) ; No toolbar
 (scroll-bar-mode -1) ; No scrollbar
@@ -76,6 +50,8 @@
 (delete-selection-mode 1) ; Delete selected text when typing
 (setq-default cursor-type 'bar) ; Use bar for cursor
 (show-paren-mode 1) ; Matches parentheses
+
+(global-subword-mode)
 
 (global-hl-line-mode 1) ; Highlights current line
 (set-face-background 'hl-line "#3e4446") ; Set colour of highlighted line
@@ -91,9 +67,18 @@
 (global-set-key (kbd "S-<home>") 'smart-home-with-mark) ; Smart home key with selection
 (global-set-key (kbd "S-C-a") 'smart-home-with-mark)
 
-(global-set-key [f5] (lambda () (interactive)(kill-buffer))) ; kill current buffer with f5
+(load-library "hideshow")
+(global-set-key (kbd "C-+") 'hs-toggle-hiding)
+(global-set-key (kbd "C--") 'hs-toggle-hiding)
+(add-hook 'c-mode-common-hook   'hs-minor-mode)
+(add-hook 'emacs-lisp-mode-hook 'hs-minor-mode)
+(add-hook 'java-mode-hook       'hs-minor-mode)
+(add-hook 'lisp-mode-hook       'hs-minor-mode)
+(add-hook 'perl-mode-hook       'hs-minor-mode)
+(add-hook 'sh-mode-hook         'hs-minor-mode)
+(add-hook 'scala-mode-hook         'hs-minor-mode)
 
-(desktop-save-mode 1) ; save sessions
+(global-set-key [f5] (lambda () (interactive)(kill-buffer))) ; kill current buffer with f5
 
 (setq dired-listing-switches "-aghoBG --time-style=+ --group-directories-first") ; dired formatting
 (put 'dired-find-alternate-file 'disabled nil) ; use same buffer on 'a'
@@ -105,12 +90,6 @@
 (require 'jade-mode)
 (add-to-list 'auto-mode-alist '("\\.styl\\'" . sws-mode))
 
-(require 'projectile)
-(projectile-global-mode)
-(setq projectile-indexing-method 'native)
-(setq projectile-file-exists-remote-cache-expire (* 60 5))
-(setq projectile-file-exists-local-cache-expire 60)
-
 (require 'git-gutter)
 (global-git-gutter-mode t)
 
@@ -119,6 +98,8 @@
 
 (require 'tramp)
 (setq tramp-default-method "ssh") ; use ssh for remote files
+(setq tramp-auto-save-directory "/tmp")
+(setq tramp-ssh-controlmaster-options "")
 
 (require 'ido)
 (ido-mode 0) ;; only use this line to turn off ido for file names!
@@ -133,8 +114,6 @@
 (setq ac-delay 0)
 (setq ac-quick-help-delay 0.1)
 (global-auto-complete-mode t)
-;; (require 'ac-emacs-eclim-source)
-;; (ac-emacs-eclim-config)
 
 ; whitespace stuff
 (global-whitespace-mode t)
@@ -151,20 +130,8 @@
    (tab-mark 9 [8594 9] [92 9]) ; tab
    ))
 
-; yasnippet stuff
-(require 'yasnippet)
-(yas-global-mode 1)
-
-;; Ensime + Scala + SBT
-;(add-to-list 'load-path "/usr/share/ensime/elisp")
-;(add-to-list 'exec-path "/usr/share/ensime")
-
 (require 'scala-mode2)
 (require 'sbt-mode)
-(require 'ensime)
-
-(add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
-;; (add-to-list 'auto-mode-alist '("\\.java\\'" . scala-mode))
 (modify-coding-system-alist 'file "\\.java$" 'utf-8)
 
 ;; Python stuff
@@ -186,6 +153,8 @@
              (setq c-basic-indent 4)
              (setq tab-width 4)))
 
+
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -193,3 +162,4 @@
  ;; If there is more than one, they won't work right.
  '(whitespace-space ((t (:foreground "darkgray")))))
 
+(put 'upcase-region 'disabled nil)
