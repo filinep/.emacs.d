@@ -10,8 +10,8 @@
 (global-set-key [C-prior] 'tabbar-backward-tab)
 (global-set-key [C-next] 'tabbar-forward-tab)
 (global-set-key [C-tab] 'tabbar-forward-tab)
-(global-set-key [header-line mouse-4] 'tabbar-mwheel-backward)
-(global-set-key [header-line down-mouse-5] 'tabbar-forward-tab)
+(global-set-key [header-line mouse-4] 'tabbar-backward-tab)
+(global-set-key [header-line mouse-5] 'tabbar-forward-tab)
 (global-set-key [C-M-prior] 'tabbar-backward-group)
 (global-set-key [C-M-next] 'tabbar-forward-group)
 (global-set-key [C-M-tab] 'tabbar-forward-group)
@@ -54,6 +54,7 @@
 ;; we also need to set separator to avoid overlapping tabs by highlighted tabs
 (custom-set-variables
  '(tabbar-separator (quote (0.5))))
+
 ;; adding spaces
 (defun tabbar-buffer-tab-label (tab)
   "Return a label for TAB.
@@ -71,11 +72,37 @@ That is, a string used to represent it on the tab bar."
                        (length (tabbar-view
                                 (tabbar-current-tabset)))))))))
 
- (defun my-tabbar-buffer-groups ()
-   (list (cond ((string-equal "*" (substring (buffer-name) 0 1)) "emacs")
-               ((eq major-mode 'dired-mode) "emacs")
-               (t (symbol-name major-mode))
-               )))
- (setq tabbar-buffer-groups-function 'my-tabbar-buffer-groups)
+(defun my-tabbar-buffer-groups ()
+  "Return the list of group names the current buffer belongs to.
+Return a list of one element based on major mode."
+  (list
+   (cond
+    ((or (get-buffer-process (current-buffer))
+         (tabbar-buffer-mode-derived-p
+          major-mode '(comint-mode compilation-mode)))
+     "Process"
+     )
+    ((member (buffer-name)
+             '("*scratch*" "*Messages*" "*dashboard*" "TAGS"))
+     "Common"
+     )
+    ((memq major-mode
+           '(help-mode apropos-mode Info-mode Man-mode))
+     "Help"
+     )
+    ((memq (current-buffer)
+           (condition-case nil
+               (projectile-buffers-with-file-or-process (projectile-project-buffers))
+             (error nil)))
+     (projectile-project-name)
+     )
+    (t
+     (if (and (stringp mode-name)
+              (save-match-data (string-match "[^ ]" mode-name)))
+         mode-name
+       (symbol-name major-mode))
+     ))))
+
+(setq tabbar-buffer-groups-function 'my-tabbar-buffer-groups)
 
 (tabbar-mode 1)

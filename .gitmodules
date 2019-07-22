@@ -1,18 +1,6 @@
-[submodule "auto-complete"]
-	path = auto-complete
-	url = https://github.com/auto-complete/auto-complete.git
-[submodule "autopair"]
-	path = autopair
-	url = https://github.com/capitaomorte/autopair.git
-[submodule "ctable"]
-	path = ctable
-	url = https://github.com/kiwanami/emacs-ctable.git
 [submodule "deferred"]
 	path = deferred
 	url = https://github.com/kiwanami/emacs-deferred.git
-[submodule "epc"]
-	path = epc
-	url = https://github.com/kiwanami/emacs-epc.git
 [submodule "nyan-mode"]
 	path = nyan-mode
 	url = https://github.com/TeMPOraL/nyan-mode.git
@@ -58,3 +46,18 @@
 [submodule "coffee-mode"]
 	path = coffee-mode
 	url = https://github.com/defunkt/coffee-mode.git
+[submodule "neotree"]
+	path = neotree
+	url = https://github.com/jaypei/emacs-neotree.git
+[submodule "projectile"]
+	path = projectile
+	url = https://github.com/bbatsov/projectile.git
+[submodule "helm"]
+	path = helm
+	url = https://github.com/emacs-helm/helm.git
+[submodule "async"]
+	path = async
+	url = https://github.com/jwiegley/emacs-async.git
+[submodule "helmprojectile"]
+	path = helmprojectile
+	url = https://github.com/bbatsov/helm-projectile.git

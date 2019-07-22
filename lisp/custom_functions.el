@@ -27,25 +27,21 @@ of the line and the first indented character"
     (call-interactively 'set-mark-command))
   (smart-home))
 
-(defun dired-mouse-find-alternate-file (event)
-  "In dired, visit the file or directory you click on instead of the dired buffer."
-  (interactive "e")
-  (let (file)
-    (save-excursion
-      (set-buffer (window-buffer (posn-window (event-end event))))
-      (save-excursion
-	(goto-char (posn-point (event-end event)))
-	(setq file (dired-get-filename nil t))))
-    (select-window (posn-window (event-end event)))
-    (find-alternate-file (file-name-sans-versions file t))))
-
-;(define-key dired-mode-map [mouse-2] 'dired-mouse-find-alternate-file)
-
-(defun no-linum () (linum-mode 0))
-
-(add-hook 'dired-mode-hook
-	  (lambda ()
-	    (define-key dired-mode-map (kbd "^")
-	      (lambda () (interactive) (find-alternate-file ".."))) ; was dired-up-directory
-	    ))
+(defun neotree-project-root-dir-or-current-dir ()
+  "Open NeoTree using the project root, using projectile, or the
+current buffer directory."
+  (interactive)
+  (let ((project-dir (ignore-errors (projectile-project-root)))
+        (file-name (buffer-file-name))
+        )
+    (if (neo-global--window-exists-p)
+        (neotree-hide)
+      (progn
+        (neotree-show)
+        (if project-dir
+            (neotree-dir project-dir))
+        ;;(if file-name
+        ;;   (neotree-find file-name))
+        ;;(other-window)
+        ))))
 
